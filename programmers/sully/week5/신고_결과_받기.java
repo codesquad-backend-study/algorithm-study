@@ -13,28 +13,26 @@ public class 신고_결과_받기 {
         for (String s : id_list) {
             reportCntMap.put(s, 0);
         }
+        System.out.println(reportCntMap);
 
         // KEY: 유저 ID, VALUE: 유저가 신고한 ID Map 생성 (틀만)
         Map<String, String> reportMap = new HashMap<>();
-        for (String s : report) {
-            reportMap.put(s, "");
-        }
-
-        // report 배열에 따라 신고 횟수 추가 (한 유저가 다른 같은 유저를 계속 신고하면 1번으로 처리)
         int cnt = 0;
         for (int i = 0; i < report.length; i++) {
             String id = report[i].split(" ")[0];
             String report_id = report[i].split(" ")[1];
-
-            // 같은 유저가 다른 같은 유저를 계속 신고하지 않는다는 가정 하에
-            if (!reportMap.get(id_list[i]).equals(report_id)) {
-                cnt++;
-            }
+            // 이미 key 값이 존재하냐 마냐로 처리 (중복 지우기)
+            // key 값이 존재하면 value 값이 같은지 다른지 확인 -> 다르면 카운트
             reportMap.put(id, report_id);
 
-            int before = reportCntMap.get(id_list[i]);
-            reportCntMap.put(id_list[i], before + cnt);
+            if (!reportMap.get(report[i].split(" ")[0]).equals(report[i].split(" ")[1])) {
+                cnt++;
+            }
+//
+            int before = reportCntMap.get(report[i].split(" ")[0]);
+            reportCntMap.put(report[i].split(" ")[0], before + cnt);
         }
+        System.out.println(reportMap + "\n" + cnt);
 
         // 2번 이상 신고 당한 유저 추가
 
