@@ -1,0 +1,25 @@
+def solution(id_list, report, k):
+    answer = {}
+    reportMod = []
+    reported = {}
+    cases = []
+    for id in id_list:
+        reported[id] = 0
+        answer[id] = 0
+    for string in report:
+        split = string.split()
+        reportMod.append(split)
+    for case in reportMod:
+        if case not in cases:
+            cases.append(case)
+
+    for case in cases:
+        reported[case[1]] += 1
+
+    for key in reported.keys():
+        if reported[key] >= k:
+            for i in range(len(cases)):
+                if cases[i][1] == key:
+                    answer[cases[i][0]] += 1
+
+    return list(answer.values())
