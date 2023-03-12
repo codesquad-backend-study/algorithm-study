@@ -4,35 +4,32 @@ import java.util.*;
 
 public class FiaCache {
     public int solution(int cacheSize, String[] cities) {
+        if (cacheSize == 0) {
+            return cities.length * 5;
+        }
+
         int runtime = 0;
 
-        Map<String, Integer> cache = new HashMap<>();
-
-        int index = 0;
+        Deque<String> cache = new ArrayDeque<>();
 
         for (String city : cities) {
             city = city.toLowerCase();
-            if (cache.get(city) != null) { // 캐시에 저장되어 있는 경우
-                cache.put(city, index);
+            if (cache.contains(city)) { // 캐시에 저장되어 있는 경우
+                cache.remove(city);
+                cache.addFirst(city);
                 runtime += 1; // 실행 시간 1초
             } else { // 캐시에 저장되어 있지 않은 경우
                 boolean isFull = cache.size() == cacheSize; // 캐시에 공간이 있는지 확인
                 if (!isFull) { // 캐시 공간이 비어있는 경우
-                    cache.put(city, index);
+                    cache.addFirst(city);
                 } else { // 캐시 공간이 가득 찬 경우
-                    String old = "";
-                    for (Map.Entry<String, Integer> entry : cache.entrySet()) {
-                        if (entry.getValue() == index - cacheSize) {
-                            old = entry.getKey();
-                        }
-                    }
-                    cache.remove(old); // 가장 오래 전에 사용한 캐시 제거
-                    cache.put(city, index); // 새로 캐시 저장
+                    cache.removeLast(); // 가장 오래 전에 사용한 캐시 제거
+                    cache.addFirst(city);// 새로 캐시 저장
                 }
                 runtime += 5; // 실행 시간 5초
-                index++;
             }
         }
+
         return runtime;
     }
 
