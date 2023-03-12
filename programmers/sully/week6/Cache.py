@@ -7,6 +7,13 @@ from collections import deque
 def solution(cacheSize, cities):
     time_answer = 0
 
+    # 캐시가 0인 경우
+    if cacheSize == 0:
+        return len(cities) * 5
+
+    # 대소문자 구분되지 않도록 소문자로 변경
+    cities = [city.lower() for city in cities]
+
     # 실행시간 상수 선언
     CACHE_HIT = 1  # 캐시가 이미 존재할 경우
     CACHE_MISS = 5  # 캐시가 없을 경우
@@ -16,16 +23,13 @@ def solution(cacheSize, cities):
 
     # 캐시 크기(cacheSize)에 따른 실행 시간 계산
     for city in cities:
-        # 가장 오랫동안 참조되지 않은 페이지를 교체한다는 조건 적용 (if문)
-
-        # 큐처럼 왼쪽에서 쭉 밀어주는 형태로 더해줌 (존재하지 않으면)
-        deq.appendleft(city)
-
-        # 그 후 pop(right)를 하면 됨
-        if deq.pop() == city:  # 큐의 가장 오른쪽에 있는 게(가장 오래 된) city와 같으면
+        if city in deq:
             time_answer += CACHE_HIT
+            deq.remove(city)
         else:
             time_answer += CACHE_MISS
+
+        deq.append(city)
 
     return time_answer
 
@@ -36,3 +40,8 @@ print(solution(2,
                ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork",
                 "Rome"]
                ))
+print(solution(5,
+               ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork",
+                "Rome"]))
+print(solution(2, ["Jeju", "Pangyo", "NewYork", "newyork"]))
+print(solution(0, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA"]))
