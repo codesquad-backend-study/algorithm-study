@@ -1,4 +1,4 @@
-package programmers.fia.week6;
+package programmers.fia.week7;
 
 import java.util.HashMap;
 import java.util.Map;
