@@ -11,7 +11,7 @@ public class FiaPrimeNumber {
             if (s.equals("") || s.equals("1")) {
                 continue;
             }
-            if (isPrimeNumber(Integer.parseInt(s))) {
+            if (isPrimeNumber(Long.parseLong(s))) {
                 count++;
             }
         }
@@ -19,9 +19,9 @@ public class FiaPrimeNumber {
         return count;
     }
 
-    public boolean isPrimeNumber(int number) {
-        int half = (int) Math.sqrt(number);
-        for (int i = 2; i <= half; i++) {
+    public boolean isPrimeNumber(long number) {
+        long half = (long) Math.sqrt(number);
+        for (long i = 2; i <= half; i++) {
             if (number % i == 0) {
                 return false;
             }
