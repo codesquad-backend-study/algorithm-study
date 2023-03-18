@@ -1,5 +1,6 @@
 # 자카드 유사도: 집합의 교집합 크기를 두 집합의 합집합 크기로 나눈 값으로 정의
 import math
+from collections import Counter
 
 
 def solution(str1, str2):
@@ -9,29 +10,32 @@ def solution(str1, str2):
     # 단! 기타 공백이나 숫자, 특수 문자가 들어있는 경우 -> 그 쌍을 버리기
     # 둘 다 소문자로 바꿔주자
     str1_list = make(str1)
+    print(str1_list)
     str2_list = make(str2)
+    print(str2_list)
 
     # 다중집합의 교집합 만들기
     # !!!!!!!!! "집합의 원소가 서로 같을 때도 세줘야 함"
-    gyo = []
-    for s in str1_list:
-        if s in str2_list:
-            str2_list.remove(s)
-            gyo.append(s)
+    # gyo = []
+    # for s in str1_list:
+    #     if s in str2_list:
+    #         str2_list.remove(s)
+    #         gyo.append(s)
+    # Counter 메서드는 각각의 리스트는 해당 원소값을 key값으로 하고
+    # 원소의 개수를 value값으로 하는 dictionary 형태의 구조를 반환
+    gyo = list((Counter(str1_list) & Counter(str2_list)).elements())
 
     # 다중집합의 합집합 만들기
     # !!!!!!!!! "집합의 원소가 서로 같을 때도 세줘야 함"
-    tmp_str1_list = str1_list.copy()
-    hap = str1_list.copy()
+    # tmp_str1_list = str1_list.copy()
+    # hap = str1_list.copy()
+    # for s in str2_list:
+    #     if s not in tmp_str1_list:
+    #         hap.append(s)
+    #     else:
+    #         tmp_str1_list.remove(s)
+    hap = list((Counter(str1_list) | Counter(str2_list)).elements())
 
-    for s in str2_list:
-        if s not in tmp_str1_list:
-            hap.append(s)
-        else:
-            tmp_str1_list.remove(s)
-
-    print(gyo)
-    print(hap)
     # 교집합 크기 / 합집합 크기 -> 소수점 아래 버리기 (round 메서드였나 -> round는 반올림이고 trunc임)
     if len(hap) == 0:
         answer = 65536
