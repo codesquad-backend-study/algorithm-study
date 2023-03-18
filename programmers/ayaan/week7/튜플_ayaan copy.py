@@ -12,7 +12,8 @@ def solution(s):
             countDict[num] = 1
     
     # 딕셔너리를 value의 내림차순으로 정렬하고 key를 리스트로 만든다.
-    countDict = sorted(countDict.items(), key = lambda item: item[1], reverse = True)
+    # countDict = sorted(countDict.items(), key = lambda item: item[1], reverse = True)
+    countDict = sorted(countDict.items(), key = lambda item: -item[1])
     result = [int(key) for key, value in countDict]
     
     return result
