@@ -22,15 +22,18 @@ def solution(str1, str2):
     li1_set = set(li1)
     for val in li1_set:
         if val in li2:
-            intersection += 1
+            intersection += min(li1.count(val), li2.count(val))
     
     li_set = set(li1 + li2)
     for val in li_set:
         union += max(li1.count(val), li2.count(val))
+    
+    print(intersection, union)
     
     if intersection == 0 and union == 0:
         return 65536
     else:
         return math.trunc(intersection / union * 65536)
 
-print(solution("handshake", "shake hands"))
+# print(solution("handshake", "shake hands"))
+print(solution("FRANCE", "french"))
