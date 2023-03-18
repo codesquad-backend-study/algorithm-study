@@ -1,18 +1,19 @@
 def solution(s):
-    arr = s.split("},{")
-    arr[0] = arr[0].replace("{{", "")
-    arr[-1] = arr[-1].replace("}}", "")
-    for i in range(len(arr)):
-        arr[i] = arr[i].split(",")
+    # "{" 와 "}"를 제거하고 리스트로 만든다.
+    s = s.replace("{", "").replace("}", "")
+    numList = s.split(",")
     
-    length = len(arr[0])
-    result = arr[0]
-    for i in range(1, len(arr)):
-        if len(arr[i]) < length:
-            result = arr[i] + result
+    countDict = {}
+    # 숫자를 key, 개수를 value로 가지는 딕셔너리를 만든다.
+    for num in numList:
+        if num in countDict:
+            countDict[num] += 1
         else:
-            result = result + arr[i]
-        result = list(set(result))
+            countDict[num] = 1
+    
+    # 딕셔너리를 value의 내림차순으로 정렬하고 key를 리스트로 만든다.
+    countDict = sorted(countDict.items(), key = lambda item: item[1], reverse = True)
+    result = [int(key) for key, value in countDict]
     
     return result
 
