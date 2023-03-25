@@ -13,14 +13,9 @@ public class FiaN진수게임 {
         }
 
         StringBuilder answerBuilder = new StringBuilder();
-        int i = 0;
-        while (i * m + p - 1 < builder.length()) {
-            answerBuilder.append(builder.charAt(i * m + p - 1));
-            i++;
 
-            if (answerBuilder.length() == t) {
-                break;
-            }
+        for (int i = 0; i < t; i++) {
+            answerBuilder.append(builder.charAt(i * m + p - 1));
         }
 
         return answerBuilder.toString().toUpperCase();
