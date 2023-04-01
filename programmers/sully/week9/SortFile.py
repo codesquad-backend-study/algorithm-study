@@ -49,9 +49,6 @@ def solution(files):
     for i in range(len(files)):
         TAIL = ''
 
-        # TAIL에 빈 문자열이 담기는 예외 처리
-        if len(head_list[i]) + len(number_list[i]) == len(files[i]):
-            break
         # 위에서 구해준 head_list와 number_list의 size를 다 더한 것부터 시작해야지
         for j in range(len(head_list[i]) + len(number_list[i]), len(files[i])):
             TAIL += files[i][j]
