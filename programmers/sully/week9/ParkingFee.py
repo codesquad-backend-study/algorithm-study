@@ -4,14 +4,13 @@ import math
 
 # 누적 주차 시간(분) -> parking_m을 넣으면 주차 요금 리턴하는 함수
 def calculate_fee(parking_m, basic_t, basic_fee, unit_t, unit_fee):
-    return basic_fee + math.ceil((parking_m - basic_t) / unit_t) * unit_fee
+    return basic_fee + math.ceil(max(0, parking_m - basic_t) / unit_t) * unit_fee
 
 
 def solution(fees, records):
     answer = []
-    dict_in_out = {}
-    dict_m = {}
-    dict_fee = {}
+    car_in = {}
+    car_out = {}
 
     # 이 문제에서 시간은 모두 (분)으로 바꿀 거임
     # 00:00부터 23:59까지의 시간(분)
@@ -22,28 +21,29 @@ def solution(fees, records):
         tmp_t, car_num, in_out = record.split()
         # 차량이 입차되거나 출차된 시각 -> (분)으로 저장
         tmp_h, tmp_m = tmp_t.split(':')
-        m = (int(tmp_h) * 60 + int(tmp_m))
+        m = int(tmp_h) * 60 + int(tmp_m)
         # OUT일 경우에는 그 차량의 주차 시각 차이를 계산
         if in_out == 'OUT':
-            diff_m = m - dict_m[car_num]
-            # 만약 dict_fee[car_num]이 존재하면 value 값을 더해줘야지 -> 그래야 나중에 차 번호로 정렬할 수 있음
-            if car_num in dict_fee:
-                dict_fee[car_num] = calculate_fee(diff_m, basic_t, basic_fee, unit_t, unit_fee) + dict_fee[car_num]
-            else:
-                dict_fee[car_num] = calculate_fee(diff_m, basic_t, basic_fee, unit_t, unit_fee)
-        # IN인 경우에는 현재 시간 저장
-        else:
-            dict_m[car_num] = m
+            try:
+                car_out[car_num] += m - car_in[car_num]
+            except:
+                car_out[car_num] = m - car_in[car_num]
 
-        # IN OUT 정보 저장
-        dict_in_out[car_num] = in_out
+            del car_in[car_num]
+        else:
+            # out 되면 삭제해주기
+            car_in[car_num] = m
 
     # 만약, value 값이 OUT인 차량이 있으면 그 key값을 찾고
     # max_m을 이용하여 23:59분까지 출차된 걸로 계산하면 됨
+    for car_num, m in car_in.items():
+        try:
+            car_out[car_num] += max_m - m
+        except:
+            car_out[car_num] = max_m - m
 
-    print(dict_m)
-    print(dict_fee)
-    print(dict_in_out)
+    answer = [calculate_fee(m, basic_t, basic_fee, unit_t, unit_fee) for car_num, m in
+              sorted(list(car_out.items()), key=lambda x: x[0])]
     return answer
 
 
