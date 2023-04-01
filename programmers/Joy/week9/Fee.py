@@ -26,6 +26,15 @@ def solution(fees, records):
             result[car] += total
         else :
             result[car] = total
-
-    nums = sorted(result)
+     nums = sorted(result)
     answer = []
+
+    for car in nums :
+        time = result[car]
+        if time <= fees[0] :
+            answer.append(fees[1])
+        else :
+            fee = math.ceil((time - fees[0]) /fees[2]) * fees[3] + fees[1]
+            answer.append(fee)
+
+    return answer
