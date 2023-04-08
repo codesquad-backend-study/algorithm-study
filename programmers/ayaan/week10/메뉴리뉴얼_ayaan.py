@@ -1,36 +1,27 @@
 from itertools import combinations
 
 def solution(orders, course):
-    result = []
-    menu = []
-    for order in orders:
-        menu += order
-    menu = set(menu)
+    course_menu = []
     
     for num in course:
-        menu_combination_list = list(combinations(menu, num))
-        for menu_combination in menu_combination_list:
-            count = 0
+        combi_dict = {}
+        for order in orders:
+            if len(order) < num:
+                continue
+            for combination in list(combinations(order, num)):
+                combination = sorted(combination)
+                combi_dict["".join(combination)] = combi_dict.get("".join(combination), 0) + 1
+        
+        if len(combi_dict) > 0:
+            combi_dict = sorted(combi_dict.items(), key=lambda x : -x[1])
             
-            for order in orders:
-                include = 0
-                for i in range(num):
-                    if menu_combination[i] not in order:
-                        break
-                    include += 1
-                    
-                    if include == num:
-                        count += 1
-                
-                if count == 2:
-                    course_menu = []
-                    for i in range(num):
-                        course_menu.append(menu_combination[i])
-                    result.append(course_menu)
-                    break
-    print(result)
+            max = combi_dict[0][1]
+            for combi in combi_dict:
+                if max >= 2 and max == combi[1]:
+                    course_menu.append(combi[0])
+        
+    return sorted(course_menu)
             
             
-    
-    
-solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2,3,4])
+# solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2,3,4])
+solution(["XYZ", "XWY", "WXA"], [2,3,4])
