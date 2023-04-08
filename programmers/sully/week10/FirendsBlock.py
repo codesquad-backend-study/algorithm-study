@@ -1,36 +1,59 @@
 # m: 폭, n: 높이, board(list): 배치 정보
 def solution(m, n, board):
     answer = 0
+    remove_set = set()
 
-    # 4개 블록 찾기 -> 추출해줬다가 remove_set 떔에 걍 안 해줌
-    for i in range(m - 1):
-        for j in range(n - 1):
-            # 일단 현재 위치가 0이 아니어야 이 로직이 작동되도록 해야 함
-            if board[i][j] != 0:
+    # 그냥 리스트로 바꿔주자..
+    for i in range(m):
+        board[i] = list(board[i])
+
+    while True:
+        # 4개 블록 찾기 -> 추출해줬다가 remove_set 떔에 걍 안 해줌
+        for i in range(m - 1):
+            for j in range(n - 1):
+                # 일단 현재 위치가 빈 배열이 아니어야 이 로직이 작동되도록 해야 함
+                if not board[i][j]:
+                    continue
+
                 # 인접하는 4칸이 같으면
-                if board[i][j] == board[i][j + 1] and board[i][j] == board[i + 1][j] and board[i + 1][j] == \
-                        board[i + 1][j + 1] and board[i][j + 1] == board[i + 1][j + 1]:
-                    answer += 1
+                if board[i][j] == board[i][j + 1] and board[i][j] == board[i + 1][j] \
+                        and board[i][j] == board[i + 1][j + 1]:
+                    remove_set.add((i, j))
+                    remove_set.add((i, j + 1))
+                    remove_set.add((i + 1, j))
+                    remove_set.add((i + 1, j + 1))
 
-                    # 아래처럼 하면 board를 2차원 배열로 만들어야 함
-                    # 그럼 그냥 remove한 원소들을 따로 저장하자
-                    # --------------------------------------------------------
-                    # # 그리고 여기서 그 배열들을 remove 해줘야지 (값으로 삭제하는 함수)
-                    # board.remove(board[i][j])
-                    # board.remove(board[i][j + 1])
-                    # board.remove(board[i + 1][j])
-                    # board.remove(board[i][j + 1])
+                    # 뭐임 이거 땜에 계속 오류 났던 거임???
+                    # 아 여기서 초기화를 해주면 안 되고 계속 가져가야지..
+                    # remove_set = {(i, j), (i, j + 1), (i + 1, j), (i + 1, j + 1)}
 
-                    remove_list = [(i, j), (i, j + 1), (i + 1, j), (i + 1, j + 1)]
+        # remove_set이 존재한다면(지워줬다면)
+        if remove_set:
+            # 몇 개인지 세주고 저장
+            answer += len(remove_set)
 
-    # remove_list에 있는 원소들은 건너뛰면 되려나?
-    # 아래로 쭉 내리는 정렬은 어떤 식으로 하면 될까
-    # 아 아무리 생각해도 초반에 2차원 배열로 변환했어야 될 거 같은데
-    for i in range(m - 1):
-        for j in range(n - 1):
+            # 위에서 저장해줬으니, 이제 remove_set에 있는 건 다시 초기화
+            for i, j in remove_set:
+                board[i][j] = []
 
+            # remove_set 초기화
+            remove_set = set()
+        # 존재하지 않는다면
+        else:
+            return answer
 
-    return answer
+        # 블록 아래로 땡기기
+        while True:
+            moved = False
+            for i in range(m - 1):
+                for j in range(n):
+                    if board[i][j] and not board[i + 1][j]:
+                        board[i + 1][j] = board[i][j]
+                        board[i][j] = []
+                        moved = True
+
+            if moved is False:
+                break
 
 
 # answer: 14
