@@ -1,39 +1,27 @@
 import itertools
-import time
 
-nums = [i for i in range(20)]
-answer_list = []
+def solution(orders, course):
+    ans = []
+    for cnt in course:
+        menu_candidate = {}
+        for order in orders:
+            if len(order) < cnt:
+                continue
+            combinations = itertools.combinations(sorted(order), cnt)
+            for combination in combinations:
+                substr = ''.join(combination)
+                if substr not in menu_candidate:
+                    menu_candidate[substr] = 1
+                else:
+                    menu_candidate[substr] += 1
 
+        menu_candidate = sorted(menu_candidate.items(), key=lambda x: x[1], reverse=True)
+        next = 1
+        if menu_candidate and menu_candidate[0][1] >= 2:
+            ans.append(menu_candidate[0][0])
 
+            while len(menu_candidate) > next and menu_candidate[0][1] == menu_candidate[next][1]:
+                ans.append(menu_candidate[next][0])
+                next += 1
 
-def nCr(n, ans, r):
-    if len(ans) > r:
-        return
-
-    if n == len(nums):
-        if len(ans) == r:
-            temp = [i for i in ans]
-            answer_list.append(temp)
-        return
-    ans.append(nums[n])
-    nCr(n + 1, ans, r)
-    ans.pop()
-    nCr(n + 1, ans, r)
-
-
-start = time.time()
-
-nCr(0, [], 3)
-
-end = time.time()
-
-print(f"1 : {end-start:.5f}sec ")
-
-start = time.time()
-
-combinations = itertools.combinations([i for i in range(20)], 3)
-
-end = time.time()
-
-
-print(f"2 : {end-start:.5f}sec")
+    return sorted(ans)
