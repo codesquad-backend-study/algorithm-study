@@ -32,7 +32,7 @@ public class Fia방금그곡 {
             int endHour = Integer.parseInt(endTime[0]);
             int endMin = Integer.parseInt(endTime[1]);
 
-            int playTime = (endHour * 60 - startHour * 60) + (endMin - startMin);
+            int playTime = (endHour * 60 + endMin) - (startHour * 60 + startMin);
 
             if (melody.length() >= playTime) {
                 String playMelody = melody.substring(0, playTime);
@@ -43,8 +43,7 @@ public class Fia방금그곡 {
                 }
             } else {
                 StringBuilder playMelody = new StringBuilder(melody);
-                playMelody.append(melody.charAt(0));
-                int index = 1;
+                int index = 0;
                 while (playMelody.length() != playTime) {
                     playMelody.append(playMelody.charAt(index));
                     index++;
@@ -69,6 +68,7 @@ public class Fia방금그곡 {
         for (int index : possible) {
             if (maxPlayTime < playTimes[index]) {
                 titleIndex = index;
+                maxPlayTime = playTimes[index]; // 이거 빼먹어서 안된거였음! 정신 나갔네
             }
         }
         return titles[titleIndex];
@@ -76,7 +76,7 @@ public class Fia방금그곡 {
 
     public static void main(String[] args) {
         Fia방금그곡 fia방금그곡 = new Fia방금그곡();
-        final String solution = fia방금그곡.solution("ABCDEFG", new String[] {"12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"});
+        final String solution = fia방금그곡.solution("ABCDEFG", new String[] {"11:50,12:04,HELLO,CDEFGAB", "12:57,13:11,BYE,CDEFGAB"});
         System.out.println("solution = " + solution);
     }
 }
