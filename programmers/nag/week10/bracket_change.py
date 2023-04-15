@@ -1,4 +1,4 @@
-def solution(p):
+def solution(p):   
     answer = ''
     split = []
     left = 0
@@ -16,7 +16,14 @@ def solution(p):
     for element in reversed(split):
         if element[0] == '(':
             answer = element + answer
+            print(answer)
         else:
             temp = element[1:-1]
-            answer = '(' + answer + ')' + temp[::-1]
+            asdf = ''
+            for c in temp:
+                if c == '(':
+                    asdf = asdf + ')'
+                else:
+                    asdf = asdf + '('
+            answer = '(' + answer + ')' + asdf
     return answer
