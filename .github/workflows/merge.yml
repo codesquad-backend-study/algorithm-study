@@ -2,7 +2,7 @@ name: Merge Pull Request
 
 on:
   schedule:
-    - cron: '0 23 * * 5'  # 매주 일요일 23시
+    - cron: '55 23 * * 5'  # 매주 금요일 23시 55분
 
 jobs:
   merge:
