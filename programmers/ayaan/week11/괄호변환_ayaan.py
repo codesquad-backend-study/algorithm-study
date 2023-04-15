@@ -26,23 +26,23 @@ def solution(p):
         result += solution(v)
         result += ")"
         
-        u_temp = u[1:-2]
-        for ch in u_temp:
-            u = ""
+        u = u[1:-1]
+        temp = ""
+        for ch in u:
             if ch == "(":
-                u += ")"
+                temp += ")"
             else:
-                u += "("
-        result += u
+                temp += "("
+        result += temp
     
     return result
 
 def check_right_str(s):
     stack = []
-    if len(s) != 0:
-        stack.append(s[0])
     
-    for i in range(1, len(s)):
+    for i in range(0, len(s)):
+        if len(stack) == 0 and s[i] == ")":
+            return False
         if len(stack) == 0 or stack[-1] == s[i]:
             stack.append(s[i])
         else:
@@ -52,3 +52,5 @@ def check_right_str(s):
     return False
 
 print(solution("()))((()"))
+
+# print(check_right_str("))(("))
