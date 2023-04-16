@@ -1,7 +1,7 @@
 def solution(m, musicinfos):
     answer = '(None)'
     m = m.replace('C#', 'c').replace('D#', 'd').replace('F#', 'f').replace('G#', 'g').replace('A#', 'a')
-
+    title_time = {}
     for mus in musicinfos:
         start, end, title, music = mus.split(',')
         # 위에서 했던 것처럼 리플레이스
@@ -25,7 +25,6 @@ def solution(m, musicinfos):
 
         # tmp_music 전체가 m에 포함이 되면 (find, in 쓰면 안 됨)
         # 더 긴 거?
-        title_time = {}
         maxTime = 0
         for i in range(len(tmp_music)):
             if tmp_music[i:len(m) + i] == m:
@@ -33,15 +32,11 @@ def solution(m, musicinfos):
                 # 재생된 시간도 같을 경우 먼저 입력된 음악 제목을 반환한다.
                 # 현재 시간이 더 길 경우
                 if maxTime < time:
-                    answer = title
                     maxTime = time
                     title_time[title] = time
-                # 재생된 시간이 더 작거나 같을 경우
-                else:
 
+                answer = max(title_time, key=title_time.get)
 
-                # title_time[title] = time
-                # answer = title
     return answer
 
 
