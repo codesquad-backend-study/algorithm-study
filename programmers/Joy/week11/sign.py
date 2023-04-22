@@ -30,6 +30,7 @@ def multi(nums, sign) :
         if s == '*' :
             nums[i] = nums[i]*nums[i+1]
             del nums[i+1]
+            del sign[i]
     return nums
 
 def sum(nums, sign) :
@@ -37,6 +38,7 @@ def sum(nums, sign) :
         if s == '+' :
             nums[i] = nums[i]+nums[i+1]
             del nums[i+1]
+            del sign[i]
     return nums
 
 def sub(nums, sign) :
@@ -44,6 +46,7 @@ def sub(nums, sign) :
         if s == '-' :
             nums[i] = nums[i]-nums[i+1]
             del nums[i+1]
+            del sign[i]
     return nums
 
 print(solution("100-200*300-500+20"	))
