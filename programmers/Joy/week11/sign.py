@@ -15,13 +15,14 @@ def solution(expression):
 
     for sequence in combin:
         tmp = nums[:]
+        tmp2 = sign[:]
         for s in sequence :
             if s == '*' :
-                tmp = multi(tmp,sign)
+                tmp = multi(tmp,tmp2)
             elif s == '+' :
-                tmp = sum(nums, sign)
+                tmp = sum(tmp, tmp2)
             else :
-                tmp = sub(nums, sign)
+                tmp = sub(tmp, tmp2)
         answer.append(tmp[0])
     return max(answer)
 
