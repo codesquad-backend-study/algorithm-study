@@ -15,35 +15,56 @@ def solution(expression):
 
     for sequence in combin:
         tmp = nums[:]
+        tmp2 = sign[:]
         for s in sequence :
             if s == '*' :
-                tmp = multi(tmp,sign)
+                tmp, tmp2 = multi(tmp,tmp2)
             elif s == '+' :
-                tmp = sum(nums, sign)
+                tmp, tmp2 = sum(tmp, tmp2)
             else :
-                tmp = sub(nums, sign)
+                tmp, tmp2 = sub(tmp, tmp2)
         answer.append(tmp[0])
+    answer = [ abs(i) for i in answer ]
     return max(answer)
 
 def multi(nums, sign) :
+    remove = []
     for i, s in enumerate(sign) :
         if s == '*' :
             nums[i] = nums[i]*nums[i+1]
-            del nums[i+1]
-    return nums
+            nums[i+1] = nums[i]
+            remove.append(i)
+    for i in remove[-1::-1] :
+        del nums[i]
+        del sign[i]
+
+    return nums, sign
 
 def sum(nums, sign) :
+    remove = []
     for i, s in enumerate(sign) :
         if s == '+' :
             nums[i] = nums[i]+nums[i+1]
-            del nums[i+1]
-    return nums
+            nums[i+1] = nums[i]
+            remove.append(i)
+    for i in remove[-1::-1] :
+        del nums[i]
+        del sign[i]
+
+    return nums, sign
 
 def sub(nums, sign) :
+    remove = []
     for i, s in enumerate(sign) :
         if s == '-' :
             nums[i] = nums[i]-nums[i+1]
-            del nums[i+1]
-    return nums
+            nums[i+1] = nums[i]
+            remove.append(i)
+    for i in remove[-1::-1] :
+        del nums[i]
+        del sign[i]
 
-print(solution("100-200*300-500+20"	))
+    return nums, sign
+
+print(solution("100-200*300-500+20"))
+print(solution("50*6-3*2"))
