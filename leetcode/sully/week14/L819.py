@@ -7,13 +7,8 @@ class Solution:
     # 대신 banned에 포함되어 있는 단어들은 제외함
     def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
         count_dic = defaultdict(int)
-        tmp_split_paragraph = paragraph.replace('!', ' ').replace('?', ' ').replace("'", ' ').replace(',', ' ').replace(
-            ';', ' ').replace(".", ' ').split()
-
-        # 특수문자 없애고, 소문자로 만들기
-        split_paragraph = []
-        for s in tmp_split_paragraph:
-            split_paragraph.append(s.lower())
+        split_paragraph = paragraph.replace('!', ' ').replace('?', ' ').replace("'", ' ').replace(',', ' ').replace(
+            ';', ' ').replace(".", ' ').lower().split()
 
         # 맵 만들기
         for s in split_paragraph:
