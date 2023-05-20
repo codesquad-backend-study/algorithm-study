@@ -10,7 +10,7 @@ class Solution:
 
         # dic[value] = index 형식
         for i, num in enumerate(nums):
-            if i in dic[target - num]:
+            if target - num in dic:
                 return [dic[target - num], i]
 
             dic[num] = i
