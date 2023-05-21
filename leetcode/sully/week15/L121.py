@@ -8,8 +8,8 @@ class Solution:
 
         min_price = prices[0]
         for cur_price in prices:
-            # 시간은 미래로만 흘러가는 것이니, 현재에서 과거의 최대를 계속 빼나가다 보면 결국 최대가 도출되게 됨
+            # 시간은 미래로만 흘러가는 것이니, 현재에서 과거의 최소를 계속 빼나가다 보면 결국 최대가 도출되게 됨
             answer = max(cur_price - min_price, answer)
             min_price = min(cur_price, min_price)
-            
+
         return answer
