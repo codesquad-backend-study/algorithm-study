@@ -3,14 +3,17 @@ from typing import Optional
 from leetcode.fia.week16.merge_two_sorted_lists import ListNode
 
 
-def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
-    tail = None
-    node = head
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
 
-    while node is not None and node.next is not None:
-        temp = node.next
-        node.next = tail
-        tail = node
-        node = temp
+        tail = None
+        next_node = None
+        node = head
 
-    return node
+        while node is not None:
+            next_node = node.next
+            node.next = tail
+            tail = node
+            node = next_node
+
+        return tail
