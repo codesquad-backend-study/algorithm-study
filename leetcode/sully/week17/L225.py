@@ -9,11 +9,15 @@ class MyStack:
     def push(self, x: int) -> None:
         self.deque.append(x)
 
+        for _ in range(len(self.deque) - 1):
+            popleft = self.deque.popleft()
+            self.deque.append(popleft)
+
     def pop(self) -> int:
-        return self.deque.pop()
+        return self.deque.popleft()
 
     def top(self) -> int:
-        return self.deque[-1]
+        return self.deque[0]
 
     def empty(self) -> bool:
         if not self.deque:
