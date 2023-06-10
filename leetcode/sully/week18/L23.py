@@ -20,13 +20,15 @@ class Solution:
 
         while h:
             popped = heapq.heappop(h)
-            LAST = 2
-            node = popped[LAST]
+            INDEX = 1
+            LIST = 2
+            index = popped[INDEX]
+            node = popped[LIST]
             tail.next = node
             tail = tail.next
 
             if node.next:
                 i += 1
-                heapq.heappush(h, (node.next.val, i, node.next))
+                heapq.heappush(h, (node.next.val, index, node.next))
 
         return head.next
