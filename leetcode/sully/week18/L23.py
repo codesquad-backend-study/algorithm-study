@@ -28,7 +28,6 @@ class Solution:
             tail = tail.next
 
             if node.next:
-                i += 1
                 heapq.heappush(h, (node.next.val, index, node.next))
 
         return head.next
