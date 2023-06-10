@@ -3,26 +3,16 @@ import collections
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        answer = []
-        check_map = collections.defaultdict(int)
+        used_map = collections.defaultdict(int)
+        start = max_len = 0
 
-        lt, rt = 0, 1
-        check_map[s[lt]] = 1
-        tmp = s[lt]
-        while lt < rt < len(s):
-            if s[rt] not in check_map:
-                check_map[s[rt]] = 1
-                tmp += s[rt]
-                rt += 1
-                continue
+        INDEX_PLUS = 1
+        for i, c in enumerate(s):
+            if c in used_map and start <= used_map[c]:
+                start = used_map[c] + INDEX_PLUS
+            else:
+                max_len = max(max_len, i - start + INDEX_PLUS)
 
-            answer.append(tmp)
-            check_map.clear()
-            lt += 1
-            rt = lt + 1
-            check_map[s[lt]] = 1
-            tmp = s[lt]
+            used_map[c] = i
 
-        answer.sort(key=len)
-        print(answer)
-        return len(answer[-1])
+        return max_len
