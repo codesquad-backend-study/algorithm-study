@@ -7,8 +7,7 @@ class MyCircularDeque:
     def insertFront(self, value: int) -> bool:
         if len(self.circularDeque) >= self.k:
             return False
-        tmp = [value]
-        self.circularDeque = tmp + self.circularDeque
+        self.circularDeque.insert(0, value)
         return True
 
     def insertLast(self, value: int) -> bool:
@@ -20,7 +19,7 @@ class MyCircularDeque:
     def deleteFront(self) -> bool:
         if len(self.circularDeque) == 0:
             return False
-        self.circularDeque = self.circularDeque[1:]
+        del self.circularDeque[0]
         return True
 
     def deleteLast(self) -> bool:
@@ -37,9 +36,7 @@ class MyCircularDeque:
     def getRear(self) -> int:
         if len(self.circularDeque) == 0:
             return -1
-        tmp =  self.circularDeque.pop()
-        self.circularDeque.append(tmp)
-        return tmp
+        return self.circularDeque[-1]
 
     def isEmpty(self) -> bool:
         return not self.circularDeque
