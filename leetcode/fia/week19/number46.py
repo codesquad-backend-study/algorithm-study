@@ -1,19 +1,23 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         answer = []
+        check = [False] * len(nums)
 
-        def func(path):
+        def func(index, path):
             if len(path) == len(nums):
                 answer.append(path[:])
                 return
 
-            for number in nums:
-                if number not in path:
-                    path.append(number)
-                    func(path)
-                    path.pop()
+            check[index] = True
 
-        for number in nums:
-            func([number])
+            for inde, number in enumerate(nums):
+                if not check[inde]:
+                    path.append(number)
+                    func(inde, path)
+                    path.pop()
+            check[index] = False
+
+        for index, number in enumerate(nums):
+            func(index, [number])
 
         return answer
