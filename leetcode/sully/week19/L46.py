@@ -6,13 +6,16 @@ class Solution:
         answer = []
 
         def dfs(elements: List[int]) -> None:
+
             if len(elements) == len(nums):
-                answer.append(elements)
+                answer.append(elements[:])
+                return
 
             for num in nums:
                 if num not in elements:
                     elements.append(num)
                     dfs(elements)
+                    elements.pop()
 
         for i in range(len(nums)):
             dfs([nums[i]])
