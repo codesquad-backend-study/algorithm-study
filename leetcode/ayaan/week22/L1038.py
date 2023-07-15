@@ -18,10 +18,5 @@ class Solution:
             if root.left:
                 dfs(root.left)
 
-        dfs(root.right)
-        self.sum += root.val
-        root.val = self.sum
-        if root.left:
-            dfs(root.left)
-
+        dfs(root)
         return root
