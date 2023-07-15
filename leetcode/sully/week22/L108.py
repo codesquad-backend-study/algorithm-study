@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+from typing import List, Optional
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums:
+            return None
+
+        # 현재 중간 값인 노드 선언
+        mid_node = len(nums) // 2
+        # 그 중간 값을 루트로 선언 (중간 값으로 하는 이유는 BST에서 중간 값이 가장 균형적인 값이기 때문)
+        root = TreeNode(nums[mid_node])
+
+        # 중간 값을 기준으로 왼쪽, 오른쪽 배열 선언
+        # 왼쪽 배열은 현재 노드의 왼쪽 자식 노드
+        # 오른쪽 배열은 현재 노드의 오른쪽 자식 노드
+        nums_left = nums[:mid_node]
+        nums_right = nums[mid_node + 1:]
+
+        # 왼쪽 자식 트리와 오른쪽 자식 트리를 각각 재귀적으로 생성
+        root.left = self.sortedArrayToBST(nums_left)
+        root.right = self.sortedArrayToBST(nums_right)
+
+        return root
