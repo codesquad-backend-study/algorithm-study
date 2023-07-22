@@ -23,12 +23,12 @@ class Solution:
         # inorder ALWAYS has the left branch to the left of the node
         # and right branch to the right of the node.
         # So now you know the size of each branch.
-        index = 0
-        for x in inorder:
-            index += 1
-
-            if x == pre_popleft:
-                break
+        index = inorder.index(pre_popleft)
+        # for x in inorder:
+        #     index += 1
+        #
+        #     if x == pre_popleft:
+        #         break
 
         node = TreeNode(inorder[index])
 
