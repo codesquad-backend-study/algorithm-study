@@ -15,15 +15,14 @@ def sortColors(self, nums: List[int]) -> None:
     """
     퀵 정렬
     """
-    def sort(lo, hi):
+    def quick_sort(lo, hi):
+        # 탈출 조건
         if lo >= hi:
             return
 
-        mid = partition(lo, hi)
-        sort(lo, mid - 1)
-        sort(mid, hi)
-
-    def partition(lo, hi):
+        start = lo
+        end = hi
+        # pivot : 중간값
         pivot = nums[(lo + hi) // 2]
         while lo <= hi:
             while nums[lo] < pivot:
@@ -34,6 +33,11 @@ def sortColors(self, nums: List[int]) -> None:
                 nums[lo], nums[hi] = nums[hi], nums[lo]
                 lo += 1
                 hi -= 1
-        return lo
 
-    sort(0, len(nums) - 1)
+        # lo가 나누는 기준이 됨
+        # lo의 왼쪽
+        quick_sort(start, lo - 1)
+        # lo부터 끝까지
+        quick_sort(lo, end)
+
+    quick_sort(0, len(nums) - 1)
