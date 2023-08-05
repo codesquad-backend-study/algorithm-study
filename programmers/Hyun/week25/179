@@ -1,0 +1,25 @@
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        max_len = 0
+        nums = [str(num) for num in nums]
+
+        for num in nums:
+            max_len = max(len(num), max_len)
+
+        numbers = {}
+        for num in nums:
+            key_num = num
+            for _ in range(max_len - len(num)):
+                key_num += num[-1]
+
+            numbers[key_num] = num
+
+        ans = ""
+        for key_num in sorted(numbers, reverse=True):
+            ans += numbers[key_num]
+
+        return ans
+
+
+
+            
