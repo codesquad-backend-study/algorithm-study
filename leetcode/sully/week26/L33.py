@@ -13,9 +13,10 @@ class Solution:
                 return mid
 
             # 왼쪽 절반이 정렬되었으면
-            # 왼쪽 절반에서 target을 찾아야 하면
             if nums[lt] <= nums[mid]:
-                if nums[lt] <= target < nums[mid]:
+                # 왼쪽 절반에서 target을 찾아야 하는지 확인
+                if nums[mid] > target >= nums[lt]:
+                    # nums[mid]가 target보다 크니 당연히 빼줘야 됨
                     mid -= rt
                     rt -= 1
                     continue
@@ -25,8 +26,9 @@ class Solution:
                 continue
 
             # 오른쪽 절반이 정렬되었으면
-            # 오른쪽 절반에서 target을 찾아야 하면
+            # 오른쪽 절반에서 target을 찾아야 하는지 확인
             if nums[mid] < target <= nums[rt]:
+                # nums[mid]가 target보다 작으니 당연히 더해줘야 됨
                 mid += lt
                 lt += 1
                 continue
