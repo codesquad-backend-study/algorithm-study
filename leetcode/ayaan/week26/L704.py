@@ -1,6 +1,6 @@
 def search(nums, target):
     def binary_search(start, end, target):
-        if start < 0 or end >= len(nums):
+        if start > end:
             return -1
 
         mid = (start + end) // 2
