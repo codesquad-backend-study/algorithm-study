@@ -2,8 +2,8 @@ name: Auto Merge All PRs
 
 on:
   schedule:
-    # - cron: '55 23 * * 5'  # 매주 금요일 23시 55분
-    - cron: '32 7 * * 6'
+    - cron: '55 23 * * 7'  # 매주 일요일 23시 55분
+    # - cron: '32 7 * * 6'
 
 jobs:
   merge:
