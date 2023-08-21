@@ -2,7 +2,7 @@ name: Merge All PRs
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/6 * * * *'
 
 jobs:
   merge:
