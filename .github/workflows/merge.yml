@@ -1,28 +1,37 @@
-name: Auto Merge All PRs
+name: Merge All PRs
 
 on:
   schedule:
-    - cron: '55 23 * * 7'  # 매주 일요일 23시 55분
-    # - cron: '32 7 * * 6'
+    - cron: '* * * * *'
 
 jobs:
   merge:
+    name: Merge PRs
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Fetch and Merge PRs
-        run: |
-          git config user.name "won4885"
-          git config user.email "won4885.dev@gmail.com"
-          git fetch origin "+refs/pull/*/head:refs/remotes/origin/pr/*"
-          
-          # Loop through all remote PR branches and merge them
-          for branch in $(git for-each-ref --format '%(refname:short)' refs/remotes/origin/pr/*); do
-            pr_number=$(echo $branch | cut -d '/' -f 4)
-            git checkout $branch
-            git merge origin/main --no-ff -m "Merge PR #$pr_number"
-            git push origin HEAD:main
-          done
+      - name: Merge pull requests
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prList = await github.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+            for (const pr of prList.data) {
+              try {
+                await github.pulls.merge({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number
+                });
+                console.log(`Merged PR #${pr.number}`);
+              } catch (error) {
+                console.log(`Error merging PR #${pr.number}: ${error.message}`);
+              }
+            }
