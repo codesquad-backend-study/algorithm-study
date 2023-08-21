@@ -1,80 +1,28 @@
-name: "PR Merge on time v3"
+name: Auto Merge All PRs
 
 on:
   schedule:
-  - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *'  # 매주 일요일 23시 55분
+    # - cron: '32 7 * * 6'
 
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   merge:
-    name: "Auto Merge on time"
-    runs-on: "ubuntu-latest"
-    
+    runs-on: ubuntu-latest
+
     steps:
-      - name: "Merge pull request"
-        uses: "actions/github-script@v6"
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const query = `query($owner:String!, $name:String!) {
-              repository(owner: $owner, name: $name) {
-                pullRequests(last: 100, states: OPEN) {
-                  edges {
-                    node {
-                      number
-                      headRefName
-                      baseRefName
-                      author {
-                        login
-                      }
-                      repository {
-                        name
-                      }
-                      mergeable
-                      labels(first: 10) {
-                        nodes {
-                          name
-                        }
-                      }
-                      reviews(last: 1) {
-                        nodes {
-                          state
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }`
-            
-            const variables = {
-              owner: context.repo.owner,
-              name: context.repo.repo,
-            }
-            
-            const {repository:{pullRequests:{edges: list}}} = await github.graphql(query, variables)
-            for( let {node} of list) { 
-             if(node.baseRefName === "main" || !node.labels.nodes.length) continue;
-             if (node.reviews.nodes.length && node.reviews.nodes[0].state === "CHANGES_REQUESTED") continue;
-              try { 
-                 if(node.mergeable === "CONFLICTING") {
-                   await github.rest.pulls.update({
-                      owner: context.repo.owner,
-                      repo: context.repo.repo,
-                      pull_number: node.number,
-                      state: "closed"
-                    })
-                 } else {
-                   await github.rest.pulls.merge({
-                      owner: context.repo.owner,
-                      repo: context.repo.repo,
-                      pull_number: node.number,
-                      merge_method: "merge"
-                   })
-                 }
-               } catch (e) {
-                 console.log("error", e);
-               }
-            }
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Fetch and Merge PRs
+        run: |
+          git config user.name "won4885"
+          git config user.email "won4885.dev@gmail.com"
+          git fetch origin "+refs/pull/*/head:refs/remotes/origin/pr/*"
+          
+          # Loop through all remote PR branches and merge them
+          for branch in $(git for-each-ref --format '%(refname:short)' refs/remotes/origin/pr/*); do
+            pr_number=$(echo $branch | cut -d '/' -f 4)
+            git checkout $branch
+            git merge origin/main --no-ff -m "Merge PR #$pr_number"
+            git push origin HEAD:main
+          done
