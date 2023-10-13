@@ -2,7 +2,10 @@ name: "PR Merge on time v3"
 
 on:
   schedule:
-  - cron: '30 12 * * 5'
+  - cron: '30 13 * * 5'
+  - cron: '31 13 * * 5'
+  - cron: '32 13 * * 5'
+  - cron: '33 13 * * 5'
 
   workflow_dispatch:
 
@@ -20,7 +23,7 @@ jobs:
           script: |
             const query = `query($owner:String!, $name:String!) {
               repository(owner: $owner, name: $name) {
-                pullRequests(last: 100, states: OPEN) {
+                pullRequests(last: 1, states: OPEN) {
                   edges {
                     node {
                       number
