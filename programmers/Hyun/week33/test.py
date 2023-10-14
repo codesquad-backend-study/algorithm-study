@@ -1,10 +1,10 @@
-pick = [0, 0]
+pick = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 result = []
 
 
 def go(n, start, pick):
-    if n >= len(pick):
+    if n >= 10:
         result.append(pick[:])
         return
 
@@ -15,7 +15,5 @@ def go(n, start, pick):
 
 
 go(0, 0, pick)
-
-print(result)
 
 print(len(result))
