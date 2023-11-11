@@ -33,8 +33,8 @@ def solution(key, lock):
     rotate(key)
 
     for key in keys:
-        for y_offset in range(-len(key), len(lock) + len(key) + 1):
-            for x_offset in range(-len(key), len(lock) + len(key) + 1):
+        for y_offset in range(-len(key), len(lock)):
+            for x_offset in range(-len(key), len(lock)):
                 masking(y_offset, x_offset)
                 if check():
                     return True
