@@ -14,7 +14,7 @@
 <table>
   <tr>
 <!--     <td align="center"><a href="https://github.com/n-aa-g"><img src="https://avatars.githubusercontent.com/u/115922748?v=4" width="150px;" alt=""></td> -->
-    <td align="center"><a href="https://github.com/othertkfka"><img src="https://avatars.githubusercontent.com/u/57559288?v=4" width="120px; height="120px;" alt=""></td>
+    <td align="center"><a href="https://github.com/jsjseop"><img src="https://avatars.githubusercontent.com/u/57559288?v=4" width="120px; height="120px;" alt=""></td>
     <td align="center"><a href="https://github.com/ghkdgus29"><img src="https://avatars.githubusercontent.com/u/91525492?v=4" width="120px; height="120px;" alt=""></td>
 <!--     <td align="center"><a href="https://github.com/he2joojo"><img src="https://avatars.githubusercontent.com/u/121915790?v=4" width="150px;" alt=""></td> -->
     <td align="center"><a href="https://github.com/yeonise"><img src="https://avatars.githubusercontent.com/u/105152276?v=4" width="120px; height="120px;" alt=""></td>
@@ -22,7 +22,7 @@
   </tr>
   <tr>
 <!--     <td align="center"><a href="https://github.com/n-aa-g"><b>나그</b></td> -->
-    <td align="center"><a href="https://github.com/othertkfka"><b>이안</b></td>
+    <td align="center"><a href="https://github.com/jsjseop"><b>이안</b></td>
     <td align="center"><a href="https://github.com/ghkdgus29"><b>Hyun</b></td>
 <!--     <td align="center"><a href="https://github.com/he2joojo"><b>Joy</b></td> -->
     <td align="center"><a href="https://github.com/yeonise"><b>Fia</b></td>
