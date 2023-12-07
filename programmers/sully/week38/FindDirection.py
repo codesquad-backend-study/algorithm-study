@@ -24,6 +24,7 @@ class BinaryTree:
         if parent_node is None:
             parent_node = current_node
 
+        # 단순하게 x 좌표 비교니까 당연한 거임
         if current_node.x < parent_node.x:
             parent_node.left = self.insert(parent_node.left, current_node)
         elif current_node.x > parent_node.x:
@@ -56,12 +57,10 @@ class BinaryTree:
 
 def solution(nodeinfo):
     # 이건 왜 안 될까?
-    # new_nodeinfo = [[]]
-    # for i, node in enumerate(nodeinfo):
-    #     current_x, current_y = node[0], node[1]
-    #     new_nodeinfo.append([current_x, current_y, i + 1])
-
-    new_nodeinfo = [[node[0], node[1], i + 1] for i, node in enumerate(nodeinfo)]
+    new_nodeinfo = []
+    for i, node in enumerate(nodeinfo):
+        current_x, current_y = node[0], node[1]
+        new_nodeinfo.append([current_x, current_y, i + 1])
 
     # -x[1]: y좌표(깊이)를 내림차순
     new_nodeinfo.sort(key=lambda x: -x[1])
